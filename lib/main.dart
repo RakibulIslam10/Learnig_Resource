@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(battonApp());
+  runApp(Rakib());
 }
 
-class battonApp extends StatelessWidget {
+class Rakib extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(),
-        drawer: Drawer(),
+      home: HomeScreen(),
+    );
+  }
+}
 
-        // EvaletedBattonAdd
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+          child: ElevatedButton(
 
-        body: Center(
-            child: ElevatedButton(
-          onPressed: () {}, child: Text("Exit"),
+            // AlertDialog box in Eleveted Batton
 
-          // EvaletedBattonAdd Stayle
-
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink,
-              foregroundColor: Colors.limeAccent,
-              fixedSize: Size(90, 50),
-
-              // EvaletedBattonAdd in Text Stayle
-
-              textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        )),
-      ),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("👋 Hey there!"),
+                  content: Text("How are you?"),
+                  actions: [
+                    ElevatedButton(onPressed: () {}, child: Text("I'm Fine"))
+                  ],
+                );
+              });
+        },
+        child: Text("Rakib"),
+      )),
     );
   }
 }
