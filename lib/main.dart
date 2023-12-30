@@ -1,80 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'S.dart';
 
-void main() {
-  runApp(RakibApp());
+void main(){
+  runApp(User());
 }
 
-class RakibApp extends StatelessWidget {
+class User extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            color: Colors.pink,
-          )),
-      title: "Rakib App",
       debugShowCheckedModeBanner: false,
-      home: FristScreen(),
+      home: HomeScreen(),
     );
   }
 }
 
-class FristScreen extends StatelessWidget {
-  var NameControler = TextEditingController();
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 120.0),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 19.0),
-                child: Text(
-                  "Enter your name for next page",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: TextField(
-                controller: NameControler ,
-                decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.drive_file_rename_outline),
-                    hintText: "Please enter your name",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )),
-              ),
-            ),
-            SizedBox(
-              height: 80,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 98.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SecondScreen(NameControler.text.toString()),
-                      ));
-                },
-                child: Text("Next"),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    minimumSize: Size(10, 50),
-                    textStyle:
-                    TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
-              ),
-            )
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("Enter your name for next page"),
+          Padding(padding: EdgeInsets.all(10),child:  TextField(decoration: InputDecoration(label: Text("Name"),border: OutlineInputBorder()),),),
+          Padding(padding: EdgeInsets.all(10),child:  TextField(decoration: InputDecoration(label: Text("Email"),border: OutlineInputBorder()),),),
+          Padding(padding: EdgeInsets.all(10),child:  TextField(decoration: InputDecoration(label: Text("Phone"),border: OutlineInputBorder()),),),
+          Padding(padding: EdgeInsets.all(10),child: ElevatedButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SecondScreen("ja like dibo tai pass hobe hello"),));
+          },child: Text("Submit"),)),
+
+        ],
       ),
     );
   }
