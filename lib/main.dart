@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'S.dart';
+
 void main(){
   runApp(CounterApp());
 }
@@ -10,7 +12,7 @@ class CounterApp extends StatelessWidget {
 return MaterialApp(
   debugShowCheckedModeBanner: false,
   title: "Counter App",
-  home: HomeScreen(),
+  home: fristScreen(),
 );
   }
 }
