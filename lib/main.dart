@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
 
-import 'S.dart';
-
 void main(){
-  runApp(User());
+  runApp(CounterApp());
 }
 
-class User extends StatelessWidget {
+class CounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-    );
+return MaterialApp(
+  debugShowCheckedModeBanner: false,
+  title: "Counter App",
+  home: HomeScreen(),
+);
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text("Enter your name for next page"),
-          Padding(padding: EdgeInsets.all(10),child:  TextField(decoration: InputDecoration(label: Text("Name"),border: OutlineInputBorder()),),),
-          Padding(padding: EdgeInsets.all(10),child:  TextField(decoration: InputDecoration(label: Text("Email"),border: OutlineInputBorder()),),),
-          Padding(padding: EdgeInsets.all(10),child:  TextField(decoration: InputDecoration(label: Text("Phone"),border: OutlineInputBorder()),),),
-          Padding(padding: EdgeInsets.all(10),child: ElevatedButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SecondScreen("ja like dibo tai pass hobe hello"),));
-          },child: Text("Submit"),)),
+      appBar: AppBar(title: Text("Counter App"),),
+      body:Center(child: Text(count.toString(),
+      style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),),
 
-        ],
-      ),
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          count=count+1;
+          setState(() {});
+        },
+          child: Icon(Icons.add),),
     );
   }
 }
