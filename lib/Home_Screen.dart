@@ -92,39 +92,45 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   Expanded(
-                      child: SizedBox(
-                          height: 60,
-                          child: OutlinedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  int num1 = int.parse(_num1Controller.text);
-                                  int num2 = int.parse(_num2Controller.text);
+                    child: SizedBox(
+                      height: 60,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            int num1 = int.parse(_num1Controller.text);
+                            int num2 = int.parse(_num2Controller.text);
 
-                                  setState(() {
-                                    result = num1 + num2;
-                                  });
-                                }
-                              },
-                              child: Text(
-                                "Add",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              )))),
+                            setState(() {
+                              result = num1 + num2;
+                            });
+                          }
+                        },
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     width: 16,
                   ),
                   Expanded(
-                      child: SizedBox(
-                          height: 60,
-                          child: OutlinedButton(
-                              onPressed: ClearAll,
-                              child: Text(
-                                "Clear",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red),
-                              )))),
+                    child: SizedBox(
+                      height: 60,
+                      child: OutlinedButton(
+                        onPressed: ClearAll,
+                        child: Text(
+                          "Clear",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               )
             ],
