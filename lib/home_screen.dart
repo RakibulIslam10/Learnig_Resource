@@ -13,6 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void ClearAll() {
     Num1Controler.clear();
     Num2Controler.clear();
+    setState(() {
+      MyReult = 0;
+    });
   }
 
   TextEditingController Num1Controler = TextEditingController();
@@ -86,11 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: Text("Add"),
                       icon: Icon(CupertinoIcons.add),
                       onPressed: () {
-                        double a = double.parse(Num1Controler.text);
-                        double b = double.parse(Num2Controler.text);
-                        setState(() {
-                          MyReult = a + b;
-                        });
+                        if(_formkey.currentState!.validate()){
+                          double a = double.parse(Num1Controler.text);
+                          double b = double.parse(Num2Controler.text);
+                          setState(() {
+                            MyReult = a + b;
+                          });
+                        }
                       },
                     ),
                   ),
