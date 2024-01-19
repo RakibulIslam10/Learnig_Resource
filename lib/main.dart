@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:learn/Home_Screen.dart';
+import 'package:learn/home_screen.dart';
 
 void main(){
-  runApp(SumApp());
+  runApp(const MyApp());
 }
-class SumApp extends StatelessWidget {
-  const SumApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     );
