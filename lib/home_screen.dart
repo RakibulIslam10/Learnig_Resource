@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn/Main_page.dart';
+import 'package:learn/MyNab.dart';
+import 'package:learn/Profile.dart';
+import 'package:learn/alert.dart';
+import 'package:learn/myDwer.dart';
+import 'package:learn/mypopup.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,111 +12,240 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+void ClearAll() {
+  MyAlllist.clear();
+}
+TextEditingController NameControler = TextEditingController();
+TextEditingController NumberControler = TextEditingController();
+
+List MyAlllist =List.empty(growable: true);
 
 class _HomeScreenState extends State<HomeScreen> {
-  void ClearAll() {
-    Num1Controler.clear();
-    Num2Controler.clear();
-    setState(() {
-      MyReult = 0;
-    });
-  }
-
-  TextEditingController Num1Controler = TextEditingController();
-  TextEditingController Num2Controler = TextEditingController();
-
-  final _formkey = GlobalKey<FormState>();
- double MyReult = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Form(
-          key: _formkey,
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+        centerTitle: true,
+        title: Text(
+          "My Contact",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        actions: [Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: IconButton(onPressed: (){},
+              icon: PopupMenuButton(
+              itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.alarm, color: Colors.black),
+                                  Text("   Set Alarm")
+                                ],
+                              ),
+                            ),
+                PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.share, color: Colors.black),
+                                  Text("   Share")
+                                ],
+                              ),
+                            ),
+                PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.info_outlined, color: Colors.black),
+                                  Text("   About")
+                                ],
+                              ),
+                            ),
+                PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.exit_to_app, color: Colors.black),
+                                  Text("   Exit")
+                                ],
+                              ),
+                            ),
+
+                          ],
+              child: Icon(Icons.settings))),
+        )],
+      ),
+      drawer: MyDwer(),
+      body: Form(
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 60),
-              TextFormField(
-                controller: Num1Controler,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter any Num1";
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(CupertinoIcons.person),
-                    suffixIcon: Icon(CupertinoIcons.arrow_right),
-                    hintText: "Num1",
-                    border: OutlineInputBorder()),
+              SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextFormField(
+                  controller: NameControler,
+                  decoration: InputDecoration(
+                    hintText: "Name",
+                    prefixIcon: Icon(CupertinoIcons.person_alt),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.purple.shade300)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple.shade300),
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextFormField(
+                  controller: NumberControler,
+                  decoration: InputDecoration(
+                    hintText: "Number",
+                    prefixIcon: Icon(CupertinoIcons.phone_fill),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.purple.shade300)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple.shade300),
+                    ),
+                  ),
+                ),
               ),
-              TextFormField(
-                controller: Num2Controler,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter any Num1";
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(CupertinoIcons.lock),
-                    suffixIcon: Icon(CupertinoIcons.arrow_right),
-                    hintText: "Num2",
-                    border: OutlineInputBorder()),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Reult : $MyReult ",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
                   SizedBox(
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      label: Text("Add"),
-                      icon: Icon(CupertinoIcons.add),
+                    width: 80,
+                    height: 35,
+                    child: ElevatedButton(
                       onPressed: () {
-                        if(_formkey.currentState!.validate()){
-                          double a = double.parse(Num1Controler.text);
-                          double b = double.parse(Num2Controler.text);
-                          setState(() {
-                            MyReult = a + b;
+                        setState(() {
+
+                          MyAlllist.insert(0, {
+                            "name": NameControler.text.trim(),
+                            "Number": NumberControler.text.trim()
                           });
-                        }
+                        });
                       },
+                      child: Text(
+                        "Save",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.pink),
                     ),
                   ),
+                  SizedBox(width: 60),
                   SizedBox(
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      label: Text("Clear"),
-                      icon: Icon(CupertinoIcons.multiply),
-                      onPressed: ClearAll,
+                    width: 90,
+                    height: 35,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Updete",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple),
                     ),
-                  )
+                  ),
                 ],
+              ),SizedBox(height: 26,),
+
+              MyAlllist.isEmpty ? Text("No Contact yet...",
+              style: TextStyle(fontSize: 22,fontWeight: FontWeight.w700),):
+                  
+              OutlinedButton(onPressed:(){
+                setState(() {
+                  MyAlllist.clear();
+                });
+              },
+                child: Text("Clear All",style: TextStyle(color: Colors.red,fontSize: 20),),
+              style: OutlinedButton.styleFrom(minimumSize: Size(50, 50)),),
+              
+              SizedBox(height: 16),
+              ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: MyAlllist.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+                        height: 75,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    minRadius: 25,
+                                    backgroundColor: Colors.indigoAccent,
+                                    foregroundColor: Colors.white,
+                                    child: Text(MyAlllist[index]["name"].toString()[0]),
+                                  ),
+                                  SizedBox(width: 15),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        MyAlllist[index]["name"],
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.white),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        MyAlllist[index]["Number"],
+                                        style: TextStyle(
+                                          color: Colors.grey[300],
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              InkWell(
+                                  onTap: (){
+                               setState(() {
+                                 MyAlllist.removeAt(index);
+                               });
+                                  },
+                                  child: Icon(Icons.delete, color: Colors.greenAccent))
+                            ],
+                          ),
+                        )),
+                  );
+                },
               )
             ],
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pink,
+        onPressed: (){
+          showDialog(context: context, builder: (context) => MyDialogBox());
+
+        },child: Icon(CupertinoIcons.add_circled),
+      ),
+
+
+      bottomNavigationBar:MyNavBar()
     );
+
   }
 }
