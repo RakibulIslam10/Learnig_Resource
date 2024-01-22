@@ -12,15 +12,24 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-void ClearAll() {
+ ClearAll() {
   MyAlllist.clear();
 }
+final formkey = GlobalKey<FormState>();
+
 TextEditingController NameControler = TextEditingController();
 TextEditingController NumberControler = TextEditingController();
 
 List MyAlllist =List.empty(growable: true);
 
 class _HomeScreenState extends State<HomeScreen> {
+  MySnackber(context, String msg) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("$msg",style: TextStyle(fontSize: 18,),),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: MyDwer(),
       body: Form(
+        key: formkey,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -82,6 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return MySnackber(context, "Sorry! No info available") ;
+                    }
+                    return null;
+                  },
                   controller: NameControler,
                   decoration: InputDecoration(
                     hintText: "Name",
@@ -99,6 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: TextFormField(
+                  validator: (value){
+                    if (value!.isEmpty) {
+                      return "Please enter Number";
+                    }
+                    return null;
+                  },
                   controller: NumberControler,
                   decoration: InputDecoration(
                     hintText: "Number",
@@ -121,13 +143,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 35,
                     child: ElevatedButton(
                       onPressed: () {
-                        setState(() {
-
-                          MyAlllist.insert(0, {
-                            "name": NameControler.text.trim(),
-                            "Number": NumberControler.text.trim()
+                        if(formkey.currentState!.validate()){
+                          setState(() {
+                            MyAlllist.insert(0, {
+                              "name": NameControler.text.trim(),
+                              "Number": NumberControler.text.trim()
+                            });
                           });
-                        });
+
+                        }
                       },
                       child: Text(
                         "Save",
