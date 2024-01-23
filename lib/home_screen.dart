@@ -117,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.number,
                   validator: (value){
                     if (value!.isEmpty) {
                       return "Please enter Number";

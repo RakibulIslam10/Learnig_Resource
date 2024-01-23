@@ -1,13 +1,9 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:learn/home_screen.dart';
 
 void main() => runApp(
-  DevicePreview(
-    enabled: true,
-    builder: (context) => MyApp(), // Wrap your app
-  ),
+  MyApp(),
 );
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
