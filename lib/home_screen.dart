@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:learn/MyNab.dart';
-import 'package:learn/Profile.dart';
 import 'package:learn/alert.dart';
+import 'package:learn/global%20LIst.dart';
 import 'package:learn/myDwer.dart';
-import 'package:learn/mypopup.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,15 +12,15 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
- ClearAll() {
-  MyAlllist.clear();
+ClearAll() {
+  GlobalList.MyAlllist.clear();
 }
 final formkey = GlobalKey<FormState>();
 
 TextEditingController NameControler = TextEditingController();
 TextEditingController NumberControler = TextEditingController();
 
-List MyAlllist =List.empty(growable: true);
+
 
 class _HomeScreenState extends State<HomeScreen> {
   MySnackber(context, String msg) {
@@ -72,8 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 PopupMenuItem(
                               child: Row(
                                 children: [
-                                  Icon(Icons.exit_to_app, color: Colors.black),
-                                  Text("   Exit")
+                                 IconButton(onPressed: (){
+                                   SystemNavigator.pop();
+                                 }, icon: Icon(Icons.exit_to_app,color: Colors.black,)),
+                                  Text("  Exit")
                                 ],
                               ),
                             ),
@@ -145,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         if(formkey.currentState!.validate()){
                           setState(() {
-                            MyAlllist.insert(0, {
+                            GlobalList.MyAlllist.insert(0, {
                               "name": NameControler.text.trim(),
                               "Number": NumberControler.text.trim()
                             });
@@ -180,12 +182,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),SizedBox(height: 26,),
 
-              MyAlllist.isEmpty ? Text("No Contact yet...",
+              GlobalList.MyAlllist.isEmpty ? Text("No Contact yet...",
               style: TextStyle(fontSize: 22,fontWeight: FontWeight.w700),):
                   
               OutlinedButton(onPressed:(){
                 setState(() {
-                  MyAlllist.clear();
+                  GlobalList.MyAlllist.clear();
                 });
               },
                 child: Text("Clear All",style: TextStyle(color: Colors.red,fontSize: 20),),
@@ -195,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ListView.builder(
                 primary: false,
                 shrinkWrap: true,
-                itemCount: MyAlllist.length,
+                itemCount:  GlobalList.MyAlllist.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
@@ -220,20 +222,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     minRadius: 25,
                                     backgroundColor: Colors.indigoAccent,
                                     foregroundColor: Colors.white,
-                                    child: Text(MyAlllist[index]["name"].toString()[0]),
+                                    child: Text( GlobalList.MyAlllist[index]["name"].toString()[0]),
                                   ),
                                   SizedBox(width: 15),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        MyAlllist[index]["name"],
+                                        GlobalList.MyAlllist[index]["name"],
                                         style: TextStyle(
                                             fontSize: 20, color: Colors.white),
                                       ),
                                       SizedBox(height: 8),
                                       Text(
-                                        MyAlllist[index]["Number"],
+                                        GlobalList.MyAlllist[index]["Number"],
                                         style: TextStyle(
                                           color: Colors.grey[300],
                                         ),
@@ -245,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               InkWell(
                                   onTap: (){
                                setState(() {
-                                 MyAlllist.removeAt(index);
+                                 GlobalList.MyAlllist.removeAt(index);
                                });
                                   },
                                   child: Icon(Icons.delete, color: Colors.greenAccent))
@@ -254,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                   );
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -264,9 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: (){
           showDialog(context: context, builder: (context) => MyDialogBox());
 
-        },child: Icon(CupertinoIcons.add_circled),
+        },child: Icon(CupertinoIcons.mail),
       ),
-
 
       bottomNavigationBar:MyNavBar()
     );

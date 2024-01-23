@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn/MyContact.dart';
 import 'package:learn/Profile.dart';
 
 class MyNavBar extends StatefulWidget {
@@ -13,6 +14,14 @@ class _MyNavBarState extends State<MyNavBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
         onTap: (value) {
+
+          if(value == 1){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyAllContact(),
+                ));
+          }
           if (value == 2) {
             Navigator.push(
                 context,
